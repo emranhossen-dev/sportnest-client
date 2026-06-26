@@ -1,28 +1,18 @@
-import { createContext, useState, useEffect } from 'react';
+import { createContext, useState } from 'react';
 
 export const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState({ email: "emranhossen.dev@gmail.com", name: "Emran Hossen" });
 
-  const loginUser = (userData) => {
-    setUser(userData);
-  };
-
-  const logoutUser = () => {
+  const logout = () => {
     setUser(null);
   };
 
-  useEffect(() => {
-    setLoading(false);
-  }, []);
-
   const authInfo = {
     user,
-    loading,
-    loginUser,
-    logoutUser
+    setUser,
+    logout
   };
 
   return (

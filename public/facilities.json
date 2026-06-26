@@ -1,0 +1,80 @@
+[
+  {
+    "_id": "1",
+    "name": "Elite Football Turf",
+    "facility_type": "football",
+    "image": "https://images.unsplash.com/photo-1529900748604-07564a03e7a6",
+    "location": "Mohammadpur, Dhaka",
+    "price_per_hour": 1500,
+    "capacity": 14,
+    "available_slots": ["06:00 AM - 07:00 AM", "07:00 AM - 08:00 AM", "04:00 PM - 05:00 PM"],
+    "description": "Premium 7-a-side artificial turf with high-quality floodlights and dugout facilities.",
+    "owner_email": "owner@sportnest.com",
+    "booking_count": 12
+  },
+  {
+    "_id": "2",
+    "name": "Smash Badminton Court",
+    "facility_type": "badminton",
+    "image": "https://images.unsplash.com/photo-1626224583764-f87db24ac4ea",
+    "location": "Dhanmondi, Dhaka",
+    "price_per_hour": 800,
+    "capacity": 4,
+    "available_slots": ["09:00 AM - 10:00 AM", "10:00 AM - 11:00 AM", "06:00 PM - 07:00 PM"],
+    "description": "Indoor wooden floor badminton court with professional netting and non-marking mats.",
+    "owner_email": "owner2@sportnest.com",
+    "booking_count": 8
+  },
+  {
+    "_id": "3",
+    "name": "Olympic Swimming Lane",
+    "facility_type": "swimming",
+    "image": "https://images.unsplash.com/photo-1519666336592-e225a99dcd2f",
+    "location": "Mirpur, Dhaka",
+    "price_per_hour": 1200,
+    "capacity": 20,
+    "available_slots": ["07:00 AM - 08:00 AM", "08:00 AM - 09:00 AM", "05:00 PM - 06:00 PM"],
+    "description": "Temperature controlled Olympic size swimming pool with individual lane selectors.",
+    "owner_email": "owner3@sportnest.com",
+    "booking_count": 25
+  },
+  {
+    "_id": "4",
+    "name": "Deuce Tennis Arena",
+    "facility_type": "tennis",
+    "image": "https://images.unsplash.com/photo-1595435934249-5df7ed86e1c0",
+    "location": "Gulshan, Dhaka",
+    "price_per_hour": 1000,
+    "capacity": 4,
+    "available_slots": ["04:00 PM - 05:00 PM", "05:00 PM - 06:00 PM"],
+    "description": "International standard clay court with professional training gear available on rent.",
+    "owner_email": "owner4@sportnest.com",
+    "booking_count": 5
+  },
+  {
+    "_id": "5",
+    "name": "Grand Cricket Cage",
+    "facility_type": "cricket",
+    "image": "https://images.unsplash.com/photo-1531415074968-036ba1b575da",
+    "location": "Uttara, Dhaka",
+    "price_per_hour": 1100,
+    "capacity": 6,
+    "available_slots": ["09:00 AM - 10:00 AM", "03:00 PM - 04:00 PM"],
+    "description": "Indoor cricket practice nets with automated bowling machines and speed trackers.",
+    "owner_email": "owner5@sportnest.com",
+    "booking_count": 18
+  },
+  {
+    "_id": "6",
+    "name": "Apex Basketball Court",
+    "facility_type": "basketball",
+    "image": "https://images.unsplash.com/photo-1546519638-68e109498ffc",
+    "location": "Banani, Dhaka",
+    "price_per_hour": 1300,
+    "capacity": 10,
+    "available_slots": ["06:00 PM - 07:00 PM", "07:00 PM - 08:00 PM"],
+    "description": "Standard indoor hardwood basketball court with adjustable hoops and electronic scoreboard.",
+    "owner_email": "owner6@sportnest.com",
+    "booking_count": 15
+  }
+]
