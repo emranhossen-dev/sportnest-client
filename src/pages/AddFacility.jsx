@@ -5,10 +5,11 @@ import toast from 'react-hot-toast';
 
 const AddFacility = () => {
   const { user } = useContext(AuthContext);
+  const [imageFile, setImageFile] = useState(null);
+  const [uploading, setUploading] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     facility_type: 'football',
-    image_url: '',
     location: '',
     price_per_hour: '',
     capacity: '',
@@ -16,31 +17,51 @@ const AddFacility = () => {
     description: ''
   });
 
+  const IMGBB_API_KEY = import.meta.env.VITE_IMGBB_API_KEY;
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const handleFileChange = (e) => {
+    setImageFile(e.target.files[0]);
+  };
 
-
-const handleSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const { name, location, price_per_hour, capacity, available_slots, description } = formData;
 
-    if (!name || !location || !price_per_hour || !capacity || !available_slots || !description) {
-      toast.error('Please fill in all required fields');
+    if (!name || !location || !price_per_hour || !capacity || !available_slots || !description || !imageFile) {
+      toast.error('Please fill in all fields and select an image');
       return;
     }
 
-    const facilityData = {
-      ...formData,
-      price_per_hour: Number(price_per_hour),
-      capacity: Number(capacity),
-      available_slots: available_slots.split(',').map(slot => slot.trim()),
-      owner_email: user?.email || 'emranhossen.dev@gmail.com',
-      booking_count: 0
-    };
+    setUploading(true);
 
     try {
+      const imgFormData = new FormData();
+      imgFormData.append('image', imageFile);
+
+      const imgbbResponse = await axios.post(
+        `https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`,
+        imgFormData
+      );
+
+      const displayUrl = imgbbResponse.data.data.display_url;
+
+      const facilityData = {
+        name,
+        facility_type: formData.facility_type,
+        image: displayUrl,
+        location,
+        price_per_hour: Number(price_per_hour),
+        capacity: Number(capacity),
+        available_slots: available_slots.split(',').map(slot => slot.trim()),
+        description,
+        owner_email: user?.email || 'emranhossen.dev@gmail.com',
+        booking_count: 0
+      };
+
       const response = await axios.post('http://localhost:5000/facilities', facilityData);
       
       if (response.data.insertedId) {
@@ -48,17 +69,20 @@ const handleSubmit = async (e) => {
         setFormData({
           name: '',
           facility_type: 'football',
-          image_url: '',
           location: '',
           price_per_hour: '',
           capacity: '',
           available_slots: '',
           description: ''
         });
+        setImageFile(null);
+        e.target.reset();
       }
     } catch (error) {
-      console.error('Error adding facility:', error);
-      toast.error('Failed to connect to the server');
+      console.error(error);
+      toast.error('Failed to publish facility or image upload failed');
+    } finally {
+      setUploading(false);
     }
   };
 
@@ -89,8 +113,8 @@ const handleSubmit = async (e) => {
           </div>
 
           <div className="space-y-1.5">
-            <label className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Image URL</label>
-            <input type="url" name="image_url" value={formData.image_url} onChange={handleChange} className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 focus:border-emerald-500 focus:outline-none text-sm text-slate-900 dark:text-slate-100 transition-colors" placeholder="https://example.com/image.jpg" />
+            <label className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Upload Image</label>
+            <input type="file" accept="image/*" onChange={handleFileChange} className="w-full px-4 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 focus:border-emerald-500 focus:outline-none text-sm text-slate-900 dark:text-slate-100 transition-colors file:mr-4 file:py-1 file:px-3 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-slate-900 file:text-white dark:file:bg-emerald-500 dark:file:text-slate-950 cursor-pointer" />
           </div>
 
           <div className="space-y-1.5">
@@ -123,8 +147,8 @@ const handleSubmit = async (e) => {
             <textarea name="description" value={formData.description} onChange={handleChange} rows="4" className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 focus:border-emerald-500 focus:outline-none text-sm text-slate-900 dark:text-slate-100 transition-colors resize-none" placeholder="Enter detailed description of your facility rules and perks..."></textarea>
           </div>
 
-          <button type="submit" className="w-full md:col-span-2 py-3 bg-slate-900 hover:bg-slate-800 dark:bg-emerald-500 dark:hover:bg-emerald-600 text-white dark:text-slate-950 font-bold rounded-xl transition-colors text-sm mt-2 cursor-pointer shadow-xs">
-            Publish Facility
+          <button type="submit" disabled={uploading} className="w-full md:col-span-2 py-3 bg-slate-900 hover:bg-slate-800 dark:bg-emerald-500 dark:hover:bg-emerald-600 text-white dark:text-slate-950 font-bold rounded-xl transition-colors text-sm mt-2 cursor-pointer shadow-xs disabled:opacity-50 disabled:cursor-not-allowed">
+            {uploading ? 'Uploading Image...' : 'Publish Facility'}
           </button>
         </form>
       </div>
