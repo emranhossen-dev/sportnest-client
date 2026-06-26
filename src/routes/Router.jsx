@@ -35,6 +35,7 @@ const router = createBrowserRouter([
         path: '/facility/:id',
         element: <FacilityDetails />
       },
+      
       {
         path: '/add-facility',
         element: <AddFacility />
