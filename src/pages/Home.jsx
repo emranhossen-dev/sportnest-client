@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router';
+import axios from 'axios';
 import Loading from '../components/Loading';
 
 const Home = () => {
@@ -7,15 +8,18 @@ const Home = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('/facilities.json')
-      .then((res) => res.json())
-      .then((data) => {
-        setFacilities(data.slice(0, 6));
+    const fetchFacilities = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/facilities');
+        setFacilities(response.data.slice(0, 6));
         setLoading(false);
-      })
-      .catch(() => {
+      } catch (error) {
+        console.error("Error fetching facilities:", error);
         setLoading(false);
-      });
+      }
+    };
+
+    fetchFacilities();
   }, []);
 
   if (loading) return <Loading />;
