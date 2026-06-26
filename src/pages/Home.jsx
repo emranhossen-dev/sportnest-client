@@ -12,25 +12,26 @@ const Home = () => {
       .then((data) => {
         setFacilities(data.slice(0, 6));
         setLoading(false);
+      })
+      .catch(() => {
+        setLoading(false);
       });
   }, []);
 
   if (loading) return <Loading />;
 
   return (
-    <div className="space-y-24 pb-24">
-      <section className="relative min-h-[85vh] flex items-center justify-center px-6 overflow-hidden bg-[radial-gradient(ellipse_at_top,var(--tw-gradient-stops))] from-emerald-950/30 via-slate-950 to-slate-950">
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#0f172a_1px,transparent_1px),linear-gradient(to_bottom,#0f172a_1px,transparent_1px)] bg-size-[4rem_4rem] mask-[radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]"></div>
-        <div className="relative max-w-4xl mx-auto text-center space-y-8">
-          <h1 className="text-4xl sm:text-6xl font-black tracking-tight leading-none">
-            Your Ultimate Arena <br />
-            <span className="text-transparent bg-clip-text bg-linear-to-r from-emerald-400 to-teal-500">Awaits Your Game</span>
+    <div className="space-y-16 pb-16 bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-50 transition-colors duration-200">
+      <section className="bg-slate-100 dark:bg-slate-900/40 py-20 px-6 text-center border-b border-slate-200 dark:border-slate-900">
+        <div className="max-w-3xl mx-auto space-y-6">
+          <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-slate-100">
+            SportNest Facility Booking System
           </h1>
-          <p className="text-lg text-slate-400 max-w-2xl mx-auto">
-            Book professional football turfs, badminton courts, and swimming lanes in seconds. Experience seamless sports scheduling today.
+          <p className="text-md text-slate-600 dark:text-slate-400 max-w-xl mx-auto">
+            Book football turfs, badminton courts, cricket cages, and swimming lanes instantly. Real-time availability matching your sports spirit.
           </p>
           <div>
-            <Link to="/facilities" className="inline-block px-8 py-4 bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold rounded-xl transition-all shadow-xl shadow-emerald-500/20 transform hover:-translate-y-0.5">
+            <Link to="/facilities" className="inline-block px-6 py-3 bg-emerald-600 hover:bg-emerald-700 dark:bg-emerald-500 dark:hover:bg-emerald-600 text-white dark:text-slate-950 font-bold rounded-lg transition-colors shadow-md">
               Explore Facilities
             </Link>
           </div>
@@ -38,32 +39,30 @@ const Home = () => {
       </section>
 
       <section className="max-w-7xl mx-auto px-6">
-        <div className="text-center space-y-3 mb-16">
-          <h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl">Featured Facilities</h2>
-          <p className="text-slate-400 max-w-md mx-auto text-sm">
-            Top-rated arenas and courts available for reservation right now.
+        <div className="text-center space-y-2 mb-12">
+          <h2 className="text-2xl font-bold tracking-tight sm:text-3xl text-slate-900 dark:text-slate-100">Featured Facilities</h2>
+          <p className="text-slate-500 dark:text-slate-400 max-w-sm mx-auto text-sm">
+            Top-rated professional venues available for reservation today.
           </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {facilities.map((facility) => (
-            <div key={facility._id} className="group relative rounded-2xl bg-slate-900/50 border border-slate-800/60 overflow-hidden backdrop-blur-md flex flex-col h-full transition-all duration-300 hover:border-slate-700/80 hover:shadow-2xl hover:shadow-emerald-500/5">
-              <div className="relative aspect-video w-full overflow-hidden bg-slate-800">
-                <img src={facility.image} alt={facility.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
-                <span className="absolute top-4 right-4 px-3 py-1 bg-slate-950/80 backdrop-blur-md text-xs font-semibold text-emerald-400 rounded-full border border-slate-800">
-                  ${facility.price_per_hour}/hr
+            <div key={facility._id} className="border border-slate-200 dark:border-slate-900 rounded-xl bg-white dark:bg-slate-900 overflow-hidden flex flex-col h-full shadow-xs hover:shadow-md transition-shadow">
+              <div className="relative aspect-video w-full overflow-hidden bg-slate-100 dark:bg-slate-800">
+                <img src={facility.image} alt={facility.name} className="w-full h-full object-cover" />
+                <span className="absolute top-3 right-3 px-2.5 py-1 bg-slate-900 dark:bg-slate-950 text-xs font-bold text-white dark:text-emerald-400 rounded-md border border-transparent dark:border-slate-800">
+                  {facility.price_per_hour} BDT/hr
                 </span>
               </div>
-              <div className="p-6 flex flex-col grow space-y-4">
-                <div className="space-y-2">
-                  <span className="text-xs font-bold uppercase tracking-widest text-emerald-500">{facility.facility_type}</span>
-                  <h3 className="text-xl font-bold text-slate-100">{facility.name}</h3>
-                  <p className="text-xs text-slate-400 flex items-center gap-1">
-                    <span>📍</span> {facility.location}
-                  </p>
+              <div className="p-5 flex flex-col grow space-y-4">
+                <div className="space-y-1">
+                  <span className="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">{facility.facility_type}</span>
+                  <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100">{facility.name}</h3>
+                  <p className="text-xs text-slate-500 dark:text-slate-400">📍 {facility.location}</p>
                 </div>
-                <p className="text-sm text-slate-400 line-clamp-2 grow">{facility.description}</p>
+                <p className="text-sm text-slate-600 dark:text-slate-400 line-clamp-2 grow">{facility.description}</p>
                 <div className="pt-2">
-                  <Link to={`/facility/${facility._id}`} className="w-full inline-flex items-center justify-center px-5 py-3 bg-slate-800 hover:bg-emerald-500 hover:text-slate-950 font-bold text-sm text-slate-200 rounded-xl transition-all duration-200">
+                  <Link to={`/facility/${facility._id}`} className="w-full inline-flex items-center justify-center px-4 py-2.5 bg-slate-900 dark:bg-slate-800 hover:bg-slate-800 dark:hover:bg-slate-700 text-white font-bold text-sm rounded-lg transition-colors">
                     Book Now
                   </Link>
                 </div>
@@ -74,47 +73,39 @@ const Home = () => {
       </section>
 
       <section className="max-w-7xl mx-auto px-6">
-        <div className="rounded-3xl bg-linear-to-r from-emerald-950/40 to-slate-900/40 border border-emerald-500/10 p-8 md:p-12 backdrop-blur-sm grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-          <div className="space-y-6">
-            <h2 className="text-3xl font-extrabold tracking-tight">Why Choose SportNest?</h2>
-            <p className="text-slate-400 text-sm leading-relaxed">
-              We connect passion with premium spaces. Whether you want a casual weekend match or intensive team practices, our portal streamlines availability and payments.
+        <div className="rounded-2xl bg-slate-100 dark:bg-slate-900/30 p-8 md:p-12 border border-slate-200 dark:border-slate-900 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+          <div className="space-y-4">
+            <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100">Why Choose SportNest?</h2>
+            <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+              We provide dynamic slot lock systems, verified playground listings, and a simple management portal optimized for individual players and facility managers.
             </p>
-            <ul className="space-y-3 text-sm text-slate-300">
-              <li className="flex items-center gap-2">✓ Verified Professional Grade Arenas</li>
-              <li className="flex items-center gap-2">✓ Instant Real-time Slot Lock System</li>
-              <li className="flex items-center gap-2">✓ Hassle-free 100% Secure Bookings</li>
+            <ul className="space-y-2 text-sm text-slate-700 dark:text-slate-300 font-medium">
+              <li>✓ Verified Sports Complexes</li>
+              <li>✓ Real-time Available Slots</li>
+              <li>✓ Immediate Reservation Flow</li>
             </ul>
           </div>
           <div className="grid grid-cols-2 gap-4">
-            <div className="p-6 rounded-2xl bg-slate-900/60 border border-slate-800 text-center space-y-2">
-              <p className="text-3xl font-black text-emerald-400">15k+</p>
-              <p className="text-xs text-slate-400 uppercase tracking-wider">Active Players</p>
+            <div className="p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-900 text-center space-y-1">
+              <p className="text-2xl font-bold text-emerald-600 dark:text-emerald-400">15k+</p>
+              <p className="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wider font-semibold">Players</p>
             </div>
-            <div className="p-6 rounded-2xl bg-slate-900/60 border border-slate-800 text-center space-y-2">
-              <p className="text-3xl font-black text-emerald-400">120+</p>
-              <p className="text-xs text-slate-400 uppercase tracking-wider">Sports Facilities</p>
-            </div>
-            <div className="p-6 rounded-2xl bg-slate-900/60 border border-slate-800 text-center space-y-2">
-              <p className="text-3xl font-black text-emerald-400">98%</p>
-              <p className="text-xs text-slate-400 uppercase tracking-wider">Success Rate</p>
-            </div>
-            <div className="p-6 rounded-2xl bg-slate-900/60 border border-slate-800 text-center space-y-2">
-              <p className="text-3xl font-black text-emerald-400 font-sans">24/7</p>
-              <p className="text-xs text-slate-400 uppercase tracking-wider">Support Open</p>
+            <div className="p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-900 text-center space-y-1">
+              <p className="text-2xl font-bold text-emerald-600 dark:text-emerald-400">120+</p>
+              <p className="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wider font-semibold">Arenas</p>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="max-w-7xl mx-auto px-6 text-center">
-        <div className="max-w-2xl mx-auto space-y-6 rounded-2xl bg-slate-900/30 border border-slate-800 p-8 md:p-12 backdrop-blur-md">
-          <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight">Ready to Own a Venue?</h2>
-          <p className="text-sm text-slate-400 leading-relaxed">
-            List your playground, indoor courts, or commercial swimming complexes with us to manage schedules dynamically and maximize your slot utilization rates.
+      <section className="max-w-4xl mx-auto px-6 text-center">
+        <div className="space-y-4 rounded-xl border border-slate-200 dark:border-slate-900 bg-white dark:bg-slate-900 p-8">
+          <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100">List Your Venue With Us</h2>
+          <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+            Maximize your playground visibility, automate schedules seamlessly, and capture user analytics efficiently.
           </p>
           <div className="pt-2">
-            <Link to="/add-facility" className="inline-block px-6 py-3 bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white font-bold text-sm rounded-xl transition-all">
+            <Link to="/add-facility" className="inline-block px-5 py-2.5 bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 font-bold text-sm rounded-lg transition-colors">
               Become a Provider
             </Link>
           </div>
