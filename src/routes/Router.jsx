@@ -8,7 +8,9 @@ import AddFacility from '../pages/AddFacility';
 import FacilityDetails from '../pages/FacilityDetails';
 import MyBookings from '../pages/MyBookings';
 import ManageMyFacilities from '../pages/ManageMyFacilities';
+import UpdateFacility from '../pages/UpdateFacility';
 import NotFound from '../pages/NotFound';
+import PrivateRoute from '../components/PrivateRoute';
 
 const router = createBrowserRouter([
   {
@@ -33,20 +35,23 @@ const router = createBrowserRouter([
       },
       {
         path: '/facility/:id',
-        element: <FacilityDetails />
-      },
-      
-      {
-        path: '/add-facility',
-        element: <AddFacility />
+        element: <PrivateRoute><FacilityDetails /></PrivateRoute>
       },
       {
         path: '/my-bookings',
-        element: <MyBookings />
+        element: <PrivateRoute><MyBookings /></PrivateRoute>
+      },
+      {
+        path: '/add-facility',
+        element: <PrivateRoute><AddFacility /></PrivateRoute>
       },
       {
         path: '/manage-facilities',
-        element: <ManageMyFacilities />
+        element: <PrivateRoute><ManageMyFacilities /></PrivateRoute>
+      },
+      {
+        path: '/update-facility/:id',
+        element: <PrivateRoute><UpdateFacility /></PrivateRoute>
       },
       {
         path: '*',

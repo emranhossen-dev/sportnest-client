@@ -26,6 +26,7 @@ const Navbar = () => {
             <>
               <NavLink to="/my-bookings" className={({ isActive }) => isActive ? activeStyle : inactiveStyle}>My Bookings</NavLink>
               <NavLink to="/add-facility" className={({ isActive }) => isActive ? activeStyle : inactiveStyle}>Add Facility</NavLink>
+              <NavLink to="/manage-facilities" className={({ isActive }) => isActive ? activeStyle : inactiveStyle}>Manage My Facilities</NavLink>
             </>
           )}
         </div>
@@ -63,6 +64,7 @@ const Navbar = () => {
                   </div>
                   <Link to="/my-bookings" onClick={() => setIsOpen(false)} className="block px-4 py-2 text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors">My Bookings</Link>
                   <Link to="/add-facility" onClick={() => setIsOpen(false)} className="block px-4 py-2 text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors">Add Facility</Link>
+                  <Link to="/manage-facilities" onClick={() => setIsOpen(false)} className="block px-4 py-2 text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors">Manage My Facilities</Link>
                   <button onClick={() => { logout(); setIsOpen(false); }} className="w-full text-left block px-4 py-2 text-sm text-rose-600 dark:text-rose-400 hover:bg-rose-500/10 rounded-lg transition-colors mt-1 cursor-pointer">
                     Logout
                   </button>
@@ -114,6 +116,7 @@ const Navbar = () => {
             <>
               <NavLink to="/my-bookings" onClick={() => setIsMobileMenuOpen(false)} className={({ isActive }) => isActive ? activeStyle : inactiveStyle}>My Bookings</NavLink>
               <NavLink to="/add-facility" onClick={() => setIsMobileMenuOpen(false)} className={({ isActive }) => isActive ? activeStyle : inactiveStyle}>Add Facility</NavLink>
+              <NavLink to="/manage-facilities" onClick={() => setIsMobileMenuOpen(false)} className={({ isActive }) => isActive ? activeStyle : inactiveStyle}>Manage My Facilities</NavLink>
             </>
           )}
 
