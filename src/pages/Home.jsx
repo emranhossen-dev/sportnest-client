@@ -4,13 +4,14 @@ import axios from 'axios';
 import Loading from '../components/Loading';
 
 const Home = () => {
+  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
   const [facilities, setFacilities] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchFacilities = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/facilities');
+        const response = await axios.get(`${API_URL}/facilities`);
         setFacilities(response.data.slice(0, 6));
         setLoading(false);
       } catch (error) {
