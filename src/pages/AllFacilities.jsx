@@ -4,6 +4,7 @@ import axios from 'axios';
 import Loading from '../components/Loading';
 
 const AllFacilities = () => {
+    const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
   const [facilities, setFacilities] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
@@ -14,7 +15,7 @@ const AllFacilities = () => {
     const fetchFacilities = async () => {
       setLoading(true);
       try {
-        let url = `http://localhost:5000/facilities?search=${searchTerm}`;
+        let url = `${API_URL}/facilities?search=${searchTerm}`;
         if (selectedType !== 'all') {
           url += `&type=${selectedType}`;
         }

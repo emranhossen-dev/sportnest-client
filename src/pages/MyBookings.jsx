@@ -5,6 +5,7 @@ import Loading from '../components/Loading';
 import toast from 'react-hot-toast';
 
 const MyBookings = () => {
+  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
   const { user } = useContext(AuthContext);
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -12,15 +13,19 @@ const MyBookings = () => {
   useEffect(() => {
     let isMounted = true;
     const fetchMyBookings = async () => {
-      if (!user?.email) return;
+      if (!user?.email) {
+        setLoading(false);
+        return;
+      }
       try {
         setLoading(true);
-        const response = await axios.get(`http://localhost:5000/bookings?email=${user.email}`, { withCredentials: true });
+        const response = await axios.get(`${API_URL}/bookings?email=${user.email}`, { withCredentials: true });
         if (isMounted) {
           setBookings(response.data || []);
         }
       } catch (error) {
         console.error("Error fetching bookings:", error);
+        toast.error('Failed to load your bookings');
       } finally {
         if (isMounted) {
           setLoading(false);
@@ -32,13 +37,13 @@ const MyBookings = () => {
     return () => {
       isMounted = false;
     };
-  }, [user?.email]);
+  }, [user?.email, API_URL]);
 
   const handleCancelBooking = async (id) => {
     if (!window.confirm("Are you sure you want to cancel this booking?")) return;
 
     try {
-      const response = await axios.delete(`http://localhost:5000/bookings/${id}`, { withCredentials: true });
+      const response = await axios.delete(`${API_URL}/bookings/${id}`, { withCredentials: true });
       if (response.data.deletedCount > 0) {
         toast.success("Booking cancelled successfully!");
         setBookings(bookings.filter(b => b._id !== id));

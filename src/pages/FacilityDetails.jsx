@@ -6,6 +6,7 @@ import Loading from '../components/Loading';
 import toast from 'react-hot-toast';
 
 const FacilityDetails = () => {
+    const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
     const { id } = useParams();
     const { user } = useContext(AuthContext);
     const navigate = useNavigate();
@@ -21,7 +22,7 @@ const FacilityDetails = () => {
         const fetchFacilityDetails = async () => {
             try {
                 setLoading(true);
-                const response = await axios.get(`http://localhost:5000/facilities/${id}`);
+                const response = await axios.get(`${API_URL}/facilities/${id}`);
                 if (isMounted) {
                     setFacility(response.data);
                     if (response.data && response.data.available_slots && response.data.available_slots.length > 0) {
@@ -77,7 +78,7 @@ const FacilityDetails = () => {
         };
 
         try {
-            const response = await axios.post('http://localhost:5000/bookings', bookingData, { withCredentials: true });
+            const response = await axios.post(`${API_URL}/bookings`, bookingData, { withCredentials: true });
             if (response.data.insertedId) {
                 toast.success(`Successfully booked ${facility.name}!`);
                 navigate('/my-bookings');

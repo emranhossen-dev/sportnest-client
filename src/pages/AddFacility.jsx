@@ -18,6 +18,7 @@ const AddFacility = () => {
   });
 
   const IMGBB_API_KEY = import.meta.env.VITE_IMGBB_API_KEY;
+  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -62,7 +63,7 @@ const AddFacility = () => {
         booking_count: 0
       };
 
-      const response = await axios.post('http://localhost:5000/facilities', facilityData);
+      const response = await axios.post(`${API_URL}/facilities`, facilityData);
       
       if (response.data.insertedId) {
         toast.success('Facility added successfully!');
