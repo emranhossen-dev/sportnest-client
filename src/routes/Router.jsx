@@ -12,6 +12,8 @@ import UpdateFacility from '../pages/UpdateFacility';
 import NotFound from '../pages/NotFound';
 import PrivateRoute from '../components/PrivateRoute';
 
+
+
 const router = createBrowserRouter([
   {
     path: '/',
